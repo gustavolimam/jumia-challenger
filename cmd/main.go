@@ -22,10 +22,11 @@ func main() {
 
 	log.Info().Msg("Starting the application...")
 
+	// Up web app
 	go loadWebapp()
 
+	// Create an instance of echo and register all the routes
 	e := loadAPI()
-
 	a := api.Start(e)
 	a.RegisterRoutes()
 

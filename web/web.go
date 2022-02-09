@@ -29,14 +29,16 @@ func Run() {
 	}
 
 	// Carrega os arquivos estáticos do Front
-	fs := http.FileServer(http.Dir(path.Join("web/frontend/build")))
+	fs := http.FileServer(http.Dir(path.Join("web/frontend-app/build")))
 	router.PathPrefix("/").Handler(fs)
 	if fs == nil {
 		log.Error().Msg("Error trying to load static files of web application")
+		return
 	}
 
 	log.Info().Msgf("Server running in port: %v", os.Getenv(environment.WebPort))
 	if err := http.ListenAndServe(":"+os.Getenv(environment.WebPort), c.Handler(router)); err != nil {
 		log.Error().Msg("Error trying to start the web application server")
+		return
 	}
 }
